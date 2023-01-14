@@ -97,13 +97,12 @@ const explanation=document.getElementById('explanation');
 const button=document.querySelector('#options');
 const buttonOptions=document.getElementsByClassName('optionsAnswer');
 const nextBtn=document.querySelector('#NextQuestion');
-console.log(buttonOptions);
-let disable=true;
-nextBtn.disabled=disable;
+
+disable=(button)=>button.setAttribute("disabled","");
+    enable=(button)=>button.removeAttribute("disabled");
+disable(nextBtn);
 nextBtn.addEventListener('click',function(){
-    disable=true;
-    nextBtn.disabled=disable;
-    
+disable(this);
 })
     // TODO 2: Declare & assign a variable called fact
     // Its value should be an object with a statement, true/false answer, and explanation 
@@ -116,13 +115,12 @@ const fact= {
     
     // TODO 3: Set the text of the statement element to the fact's statement
 
-  statement.textContent=fact.statement;  
+    statement.textContent=fact.statement;  
 
     // TODO 4: Declare disable & enable functions to set or remove the "disabled" attribute from a given button element
     // disable(button) should set the button element's attribute "disabled" to the value ""
     // enable(button) should remove the attribute "disabled" from the button element
-    disable=(button)=>button.setAttribute("disabled","");
-    enable=(button)=>button.removeAttribute("disabled");
+   
 
 
 
@@ -147,7 +145,21 @@ function isCorrect(guess){
             // and add the "correct"/"incorrect" class as appropriate
 
     
-
+for(let n of buttonOptions){
+    n.addEventListener('click',function(event){
+        explanation.textContent=fact.explanation;
+        for(let n of buttonOptions){
+            disable(n);
+        }
+        if(isCorrect(event.target.value)){
+            n.classList.add("correct")
+        }
+        else{
+            n.classList.add("incorrect")
+        }
+        enable(nextBtn);
+    })
+}
   </script>
 
 </body></html>
